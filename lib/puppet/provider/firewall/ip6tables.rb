@@ -3,6 +3,7 @@ Puppet::Type.type(:firewall).provide :ip6tables, parent: :iptables, source: :ip6
 
   has_feature :iptables
   has_feature :connection_limiting
+  has_feature :connection_tracking
   has_feature :hop_limiting
   has_feature :rate_limiting
   has_feature :recent_limiting
@@ -72,6 +73,18 @@ Puppet::Type.type(:firewall).provide :ip6tables, parent: :iptables, source: :ip6
     connlimit_mask: '--connlimit-mask',
     connmark: '-m connmark --mark',
     ctstate: '-m conntrack --ctstate',
+    ctproto: ['-m conntrack --ctproto', '--ctproto'],
+    ctorigsrc: ['-m conntrack --ctorigsrc', '--ctorigsrc'],
+    ctorigdst: ['-m conntrack --ctorigdst', '--ctorigdst'],
+    ctreplsrc: ['-m conntrack --ctreplsrc', '--ctreplsrc'],
+    ctrepldst: ['-m conntrack --ctrepldst', '--ctrepldst'],
+    ctorigsrcport: ['-m conntrack --ctorigsrcport', '--ctorigsrcport'],
+    ctorigdstport: ['-m conntrack --ctorigdstport', '--ctorigdstport'],
+    ctreplsrcport: ['-m conntrack --ctreplsrcport', '--ctreplsrcport'],
+    ctrepldstport: ['-m conntrack --ctrepldstport', '--ctrepldstport'],
+    ctstatus: ['-m conntrack --ctstatus', '--ctstatus'],
+    ctexpire: ['-m conntrack --ctexpire', '--ctexpire'],
+    ctdir: ['-m conntrack --ctdir', '--ctdir'],
     destination: '-d',
     dport: ['-m multiport --dports', '--dport'],
     dst_range: '--dst-range',
@@ -253,7 +266,9 @@ Puppet::Type.type(:firewall).provide :ip6tables, parent: :iptables, source: :ip6
                     :proto, :ishasmorefrags, :islastfrag, :isfirstfrag, :src_range, :dst_range,
                     :tcp_flags, :uid, :gid, :mac_source, :sport, :dport, :port, :src_type,
                     :dst_type, :socket, :pkttype, :ipsec_dir, :ipsec_policy, :state,
-                    :ctstate, :icmp, :hop_limit, :limit, :burst, :length, :recent, :rseconds, :reap,
+                    :ctstate, :ctproto, :ctorigsrc, :ctorigdst, :ctreplsrc, :ctrepldst,
+                    :ctorigsrcport, :ctorigdstport, :ctreplsrcport, :ctrepldstport, :ctstatus, :ctexpire, :ctdir,
+                    :icmp, :hop_limit, :limit, :burst, :length, :recent, :rseconds, :reap,
                     :rhitcount, :rttl, :rname, :mask, :rsource, :rdest, :ipset, :string, :string_algo,
                     :string_from, :string_to, :jump, :clamp_mss_to_pmtu, :gateway, :todest,
                     :tosource, :toports, :checksum_fill, :log_level, :log_prefix, :log_uid, :reject, :set_mss, :set_dscp, :set_dscp_class, :mss, :queue_num, :queue_bypass,
