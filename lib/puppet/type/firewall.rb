@@ -33,7 +33,7 @@ Puppet::Type.newtype(:firewall) do
       * ip6tables: Ip6tables type provider
 
         * Required binaries: ip6tables-save, ip6tables.
-        * Supported features: address_type, connection_limiting, dnat, hop_limiting, icmp_match,
+        * Supported features: address_type, connection_limiting, conntrack, dnat, hop_limiting, icmp_match,
         interface_match, iprange, ipsec_dir, ipsec_policy, ipset, iptables, isfirstfrag,
         ishasmorefrags, islastfrag, length, log_level, log_prefix, log_uid, mark, mask, mss,
         owner, pkttype, queue_bypass, queue_num, rate_limiting, recent_limiting, reject_type,
@@ -43,7 +43,7 @@ Puppet::Type.newtype(:firewall) do
 
         * Required binaries: iptables-save, iptables.
         * Default for kernel == linux.
-        * Supported features: address_type, clusterip, connection_limiting, dnat, icmp_match,
+        * Supported features: address_type, clusterip, connection_limiting, conntrack, dnat, icmp_match,
         interface_match, iprange, ipsec_dir, ipsec_policy, ipset, iptables, isfragment, length,
         log_level, log_prefix, log_uid, mark, mask, mss, netmap, nflog_group, nflog_prefix,
         nflog_range, nflog_threshold, owner, pkttype, queue_bypass, queue_num, rate_limiting,
@@ -56,7 +56,7 @@ Puppet::Type.newtype(:firewall) do
 
       * connection_limiting: Connection limiting features.
 
-      * connection_tracking: Connection tracking features.
+      * conntrack: Connection tracking features.
 
       * dnat: Destination NATing.
 
@@ -136,7 +136,7 @@ Puppet::Type.newtype(:firewall) do
   PUPPETCODE
 
   feature :connection_limiting, 'Connection limiting features.'
-  feature :connection_tracking, 'Connection tracking features.'
+  feature :conntrack, 'Connection tracking features.'
   feature :hop_limiting, 'Hop limiting features.'
   feature :rate_limiting, 'Rate limiting features.'
   feature :recent_limiting, 'The netfilter recent module'
@@ -913,7 +913,7 @@ Puppet::Type.newtype(:firewall) do
     end
   end
 
-  newproperty(:ctstate, array_matching: :all, required_features: :state_match) do
+  newproperty(:ctstate, array_matching: :all, required_features: :contrack) do
     desc <<-PUPPETCODE
       Matches a packet based on its state in the firewall stateful inspection
       table, using the conntrack module. Values can be:
@@ -943,7 +943,7 @@ Puppet::Type.newtype(:firewall) do
     end
   end
 
-  newproperty(:ctproto, required_features: :connection_tracking) do
+  newproperty(:ctproto, required_features: :conntrack) do
     desc <<-PUPPETCODE
       The specific layer-4 protocol number to match for this rule using the 
       conntrack module.
@@ -953,7 +953,7 @@ Puppet::Type.newtype(:firewall) do
 
   end
 
-  newproperty(:ctorigsrc, required_features: :connection_tracking) do
+  newproperty(:ctorigsrc, required_features: :conntrack) do
     desc <<-PUPPETCODE
       The original source address using the conntrack module. For example:
 
@@ -984,7 +984,7 @@ Puppet::Type.newtype(:firewall) do
     end
   end
 
-  newproperty(:ctorigdst, required_features: :connection_tracking) do
+  newproperty(:ctorigdst, required_features: :conntrack) do
     desc <<-PUPPETCODE
       The original destination address using the conntrack module. For example:
 
@@ -1015,7 +1015,7 @@ Puppet::Type.newtype(:firewall) do
     end
   end
 
-  newproperty(:ctreplsrc, required_features: :connection_tracking) do
+  newproperty(:ctreplsrc, required_features: :conntrack) do
     desc <<-PUPPETCODE
       The reply source address using the conntrack module. For example:
 
@@ -1046,7 +1046,7 @@ Puppet::Type.newtype(:firewall) do
     end
   end
 
-  newproperty(:ctrepldst, required_features: :connection_tracking) do
+  newproperty(:ctrepldst, required_features: :conntrack) do
     desc <<-PUPPETCODE
       The reply destination address using the conntrack module. For example:
 
@@ -1077,7 +1077,7 @@ Puppet::Type.newtype(:firewall) do
     end
   end
 
-  newproperty(:ctorigsrcport, array_matching: :all, required_features: :connection_tracking) do
+  newproperty(:ctorigsrcport, array_matching: :all, required_features: :conntrack) do
     desc <<-PUPPETCODE
       The original source port to match for this filter (if the protocol supports
       ports) using the conntrack module. Will accept a single element or an array.
@@ -1107,7 +1107,7 @@ Puppet::Type.newtype(:firewall) do
     end
   end
 
-  newproperty(:ctorigdstport, array_matching: :all, required_features: :connection_tracking) do
+  newproperty(:ctorigdstport, array_matching: :all, required_features: :conntrack) do
     desc <<-PUPPETCODE
       The original destination port to match for this filter (if the protocol supports
       ports) using the conntrack module. Will accept a single element or an array.
@@ -1137,7 +1137,7 @@ Puppet::Type.newtype(:firewall) do
     end
   end
 
-  newproperty(:ctreplsrcport, array_matching: :all, required_features: :connection_tracking) do
+  newproperty(:ctreplsrcport, array_matching: :all, required_features: :conntrack) do
     desc <<-PUPPETCODE
       The reply source port to match for this filter (if the protocol supports
       ports) using the conntrack module. Will accept a single element or an array.
@@ -1167,7 +1167,7 @@ Puppet::Type.newtype(:firewall) do
     end
   end
 
-  newproperty(:ctrepldstport, array_matching: :all, required_features: :connection_tracking) do
+  newproperty(:ctrepldstport, array_matching: :all, required_features: :conntrack) do
     desc <<-PUPPETCODE
       The reply destination port to match for this filter (if the protocol supports
       ports) using the conntrack module. Will accept a single element or an array.
@@ -1197,7 +1197,7 @@ Puppet::Type.newtype(:firewall) do
     end
   end
 
-  newproperty(:ctstatus, required_features: :connection_tracking) do
+  newproperty(:ctstatus, required_features: :conntrack) do
     desc <<-PUPPETCODE
       Matches a packet based on its status using the conntrack module. Values can be:
 
@@ -1226,7 +1226,7 @@ Puppet::Type.newtype(:firewall) do
     end
   end
 
-  newproperty(:ctexpire, required_features: :connection_tracking) do
+  newproperty(:ctexpire, required_features: :conntrack) do
     desc <<-PUPPETCODE
       Matches a packet based on lifetime remaining in seconds or range of values
       using the conntrack module.
@@ -1234,7 +1234,7 @@ Puppet::Type.newtype(:firewall) do
     newvalue(%r{^\d+(\:\d+)?$})
   end
 
-  newproperty(:ctdir, required_features: :connection_tracking) do
+  newproperty(:ctdir, required_features: :conntrack) do
     desc <<-PUPPETCODE
       Matches a packet that is flowing in the specified direction using the 
       conntrack module. If this flag is not specified at all, matches packets 
