@@ -1075,7 +1075,7 @@ Puppet::Type.newtype(:firewall) do
     end
   end
 
-  newproperty(:ctorigsrcport, array_matching: :all, required_features: :conntrack) do
+  newproperty(:ctorigsrcport, required_features: :conntrack) do
     desc <<-PUPPETCODE
       The original source port to match for this filter (if the protocol supports
       ports) using the conntrack module. Will accept a single element or an array.
@@ -1083,7 +1083,7 @@ Puppet::Type.newtype(:firewall) do
     newvalue(%r{^\d+(\:\d+)?$})
   end
 
-  newproperty(:ctorigdstport, array_matching: :all, required_features: :conntrack) do
+  newproperty(:ctorigdstport, required_features: :conntrack) do
     desc <<-PUPPETCODE
       The original destination port to match for this filter (if the protocol supports
       ports) using the conntrack module. Will accept a single element or an array.
@@ -1091,7 +1091,7 @@ Puppet::Type.newtype(:firewall) do
     newvalue(%r{^\d+(\:\d+)?$})
   end
 
-  newproperty(:ctreplsrcport, array_matching: :all, required_features: :conntrack) do
+  newproperty(:ctreplsrcport, required_features: :conntrack) do
     desc <<-PUPPETCODE
       The reply source port to match for this filter (if the protocol supports
       ports) using the conntrack module. Will accept a single element or an array.
@@ -1099,7 +1099,7 @@ Puppet::Type.newtype(:firewall) do
     newvalue(%r{^\d+(\:\d+)?$})
   end
 
-  newproperty(:ctrepldstport, array_matching: :all, required_features: :conntrack) do
+  newproperty(:ctrepldstport, required_features: :conntrack) do
     desc <<-PUPPETCODE
       The reply destination port to match for this filter (if the protocol supports
       ports) using the conntrack module. Will accept a single element or an array.
