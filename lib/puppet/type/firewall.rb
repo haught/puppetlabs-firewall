@@ -913,7 +913,7 @@ Puppet::Type.newtype(:firewall) do
     end
   end
 
-  newproperty(:ctstate, array_matching: :all, required_features: :contrack) do
+  newproperty(:ctstate, array_matching: :all, required_features: :conntrack) do
     desc <<-PUPPETCODE
       Matches a packet based on its state in the firewall stateful inspection
       table, using the conntrack module. Values can be:
