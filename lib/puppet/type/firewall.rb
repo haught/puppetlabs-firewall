@@ -948,9 +948,7 @@ Puppet::Type.newtype(:firewall) do
       The specific layer-4 protocol number to match for this rule using the 
       conntrack module.
     PUPPETCODE
-
     newvalue(%r{^\d+$})
-
   end
 
   newproperty(:ctorigsrc, required_features: :conntrack) do
@@ -1081,120 +1079,32 @@ Puppet::Type.newtype(:firewall) do
     desc <<-PUPPETCODE
       The original source port to match for this filter (if the protocol supports
       ports) using the conntrack module. Will accept a single element or an array.
-
-      For some firewall providers you can pass a range of ports in the format:
-
-          <start_number>-<ending_number>
-
-      For example:
-
-          1-1024
-
-      This would cover ports 1 to 1024.
     PUPPETCODE
-
-    munge do |value|
-      @resource.string_to_port(value, :proto)
-    end
-
-    def to_s?(value)
-      should_to_s(value)
-    end
-
-    def should_to_s(value)
-      value = [value] unless value.is_a?(Array)
-      value.join(',')
-    end
+    newvalue(%r{^\d+(\:\d+)?$})
   end
 
   newproperty(:ctorigdstport, array_matching: :all, required_features: :conntrack) do
     desc <<-PUPPETCODE
       The original destination port to match for this filter (if the protocol supports
       ports) using the conntrack module. Will accept a single element or an array.
-
-      For some firewall providers you can pass a range of ports in the format:
-
-          <start_number>-<ending_number>
-
-      For example:
-
-          1-1024
-
-      This would cover ports 1 to 1024.
     PUPPETCODE
-
-    munge do |value|
-      @resource.string_to_port(value, :proto)
-    end
-
-    def to_s?(value)
-      should_to_s(value)
-    end
-
-    def should_to_s(value)
-      value = [value] unless value.is_a?(Array)
-      value.join(',')
-    end
+    newvalue(%r{^\d+(\:\d+)?$})
   end
 
   newproperty(:ctreplsrcport, array_matching: :all, required_features: :conntrack) do
     desc <<-PUPPETCODE
       The reply source port to match for this filter (if the protocol supports
       ports) using the conntrack module. Will accept a single element or an array.
-
-      For some firewall providers you can pass a range of ports in the format:
-
-          <start_number>-<ending_number>
-
-      For example:
-
-          1-1024
-
-      This would cover ports 1 to 1024.
     PUPPETCODE
-
-    munge do |value|
-      @resource.string_to_port(value, :proto)
-    end
-
-    def to_s?(value)
-      should_to_s(value)
-    end
-
-    def should_to_s(value)
-      value = [value] unless value.is_a?(Array)
-      value.join(',')
-    end
+    newvalue(%r{^\d+(\:\d+)?$})
   end
 
   newproperty(:ctrepldstport, array_matching: :all, required_features: :conntrack) do
     desc <<-PUPPETCODE
       The reply destination port to match for this filter (if the protocol supports
       ports) using the conntrack module. Will accept a single element or an array.
-
-      For some firewall providers you can pass a range of ports in the format:
-
-          <start_number>-<ending_number>
-
-      For example:
-
-          1-1024
-
-      This would cover ports 1 to 1024.
     PUPPETCODE
-
-    munge do |value|
-      @resource.string_to_port(value, :proto)
-    end
-
-    def to_s?(value)
-      should_to_s(value)
-    end
-
-    def should_to_s(value)
-      value = [value] unless value.is_a?(Array)
-      value.join(',')
-    end
+    newvalue(%r{^\d+(\:\d+)?$})
   end
 
   newproperty(:ctstatus, required_features: :conntrack) do
