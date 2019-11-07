@@ -1107,7 +1107,7 @@ Puppet::Type.newtype(:firewall) do
     newvalue(%r{^\d+(\:\d+)?$})
   end
 
-  newproperty(:ctstatus, required_features: :conntrack) do
+  newproperty(:ctstatus, array_matching: :all, required_features: :conntrack) do
     desc <<-PUPPETCODE
       Matches a packet based on its status using the conntrack module. Values can be:
 
