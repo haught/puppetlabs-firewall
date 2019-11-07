@@ -1080,7 +1080,7 @@ Puppet::Type.newtype(:firewall) do
       The original source port to match for this filter (if the protocol supports
       ports) using the conntrack module. Will accept a single element or an array.
     PUPPETCODE
-    newvalue(%r{^\d+(\:\d+)?$})
+    newvalue(%r{^\d+$|^\d+\:\d+$})
   end
 
   newproperty(:ctorigdstport, required_features: :conntrack) do
@@ -1088,7 +1088,7 @@ Puppet::Type.newtype(:firewall) do
       The original destination port to match for this filter (if the protocol supports
       ports) using the conntrack module. Will accept a single element or an array.
     PUPPETCODE
-    newvalue(%r{^\d+(\:\d+)?$})
+    newvalue(%r{^\d+$|^\d+\:\d+$})
   end
 
   newproperty(:ctreplsrcport, required_features: :conntrack) do
@@ -1096,7 +1096,7 @@ Puppet::Type.newtype(:firewall) do
       The reply source port to match for this filter (if the protocol supports
       ports) using the conntrack module. Will accept a single element or an array.
     PUPPETCODE
-    newvalue(%r{^\d+(\:\d+)?$})
+    newvalue(%r{^\d+$|^\d+\:\d+$})
   end
 
   newproperty(:ctrepldstport, required_features: :conntrack) do
@@ -1104,7 +1104,7 @@ Puppet::Type.newtype(:firewall) do
       The reply destination port to match for this filter (if the protocol supports
       ports) using the conntrack module. Will accept a single element or an array.
     PUPPETCODE
-    newvalue(%r{^\d+(\:\d+)?$})
+    newvalue(%r{^\d+$|^\d+\:\d+$}})
   end
 
   newproperty(:ctstatus, array_matching: :all, required_features: :conntrack) do
@@ -1141,7 +1141,7 @@ Puppet::Type.newtype(:firewall) do
       Matches a packet based on lifetime remaining in seconds or range of values
       using the conntrack module.
     PUPPETCODE
-    newvalue(%r{^\d+(\:\d+)?$})
+    newvalue(%r{^\d+$|^\d+\:\d+$})
   end
 
   newproperty(:ctdir, required_features: :conntrack) do
