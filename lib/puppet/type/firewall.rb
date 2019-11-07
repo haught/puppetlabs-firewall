@@ -1104,7 +1104,7 @@ Puppet::Type.newtype(:firewall) do
       The reply destination port to match for this filter (if the protocol supports
       ports) using the conntrack module. Will accept a single element or an array.
     PUPPETCODE
-    newvalue(%r{^\d+$|^\d+\:\d+$}})
+    newvalue(%r{^\d+$|^\d+\:\d+$})
   end
 
   newproperty(:ctstatus, array_matching: :all, required_features: :conntrack) do
