@@ -674,6 +674,7 @@ Puppet::Type.type(:firewall).provide :iptables, parent: Puppet::Provider::Firewa
     # iptables-save and user supplied resources is consistent.
     hash[:state]   = hash[:state].sort   unless hash[:state].nil?
     hash[:ctstate] = hash[:ctstate].sort unless hash[:ctstate].nil?
+    hash[:ctstatus] = hash[:ctstatus].sort unless hash[:ctstatus].nil?
 
     # This forces all existing, commentless rules or rules with invalid comments to be moved
     # to the bottom of the stack.
