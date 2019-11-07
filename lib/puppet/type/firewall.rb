@@ -1077,32 +1077,76 @@ Puppet::Type.newtype(:firewall) do
 
   newproperty(:ctorigsrcport, required_features: :conntrack) do
     desc <<-PUPPETCODE
-      The original source port to match for this filter (if the protocol supports
-      ports) using the conntrack module. Will accept a single element or an array.
+      The original source port to match for this filter using the conntrack module. 
+      For example:
+
+          ctorigsrcport => '80'
+
+      You can also specify a port range: For example:
+
+          ctorigsrcport => '80:81'
+
+      You can also negate a port by putting ! in front. For example:
+
+          ctorigsrcport => '! 80'
+
     PUPPETCODE
     newvalue(%r{^\d+$|^\d+\:\d+$})
   end
 
   newproperty(:ctorigdstport, required_features: :conntrack) do
     desc <<-PUPPETCODE
-      The original destination port to match for this filter (if the protocol supports
-      ports) using the conntrack module. Will accept a single element or an array.
+      The original destination port to match for this filter using the conntrack module. 
+      For example:
+
+          ctorigdstport => '80'
+
+      You can also specify a port range: For example:
+
+          ctorigdstport => '80:81'
+
+      You can also negate a port by putting ! in front. For example:
+
+          ctorigdstport => '! 80'
+
     PUPPETCODE
     newvalue(%r{^\d+$|^\d+\:\d+$})
   end
 
   newproperty(:ctreplsrcport, required_features: :conntrack) do
     desc <<-PUPPETCODE
-      The reply source port to match for this filter (if the protocol supports
-      ports) using the conntrack module. Will accept a single element or an array.
+      The reply source port to match for this filter using the conntrack module. 
+      For example:
+
+          ctreplsrcport => '80'
+
+      You can also specify a port range: For example:
+
+          ctreplsrcport => '80:81'
+
+      You can also negate a port by putting ! in front. For example:
+
+          ctreplsrcport => '! 80'
+
     PUPPETCODE
     newvalue(%r{^\d+$|^\d+\:\d+$})
   end
 
   newproperty(:ctrepldstport, required_features: :conntrack) do
     desc <<-PUPPETCODE
-      The reply destination port to match for this filter (if the protocol supports
-      ports) using the conntrack module. Will accept a single element or an array.
+      The reply destination port to match for this filter using the conntrack module. 
+      For example:
+
+          ctrepldstport => '80'
+
+      You can also specify a port range: For example:
+
+          ctrepldstport => '80:81'
+
+      You can also negate a port by putting ! in front. For example:
+
+          ctrepldstport => '! 80'
+
     PUPPETCODE
     newvalue(%r{^\d+$|^\d+\:\d+$})
   end
@@ -1111,7 +1155,6 @@ Puppet::Type.newtype(:firewall) do
     desc <<-PUPPETCODE
       Matches a packet based on its status using the conntrack module. Values can be:
 
-      * NONE
       * EXPECTED
       * SEEN_REPLY
       * ASSURED
@@ -1120,7 +1163,7 @@ Puppet::Type.newtype(:firewall) do
 
     newvalues(:NONE, :EXPECTED, :SEEN_REPLY, :ASSURED, :CONFIRMED)
 
-    # States should always be sorted. This normalizes the resource states to
+    # Statuses should always be sorted. This normalizes the resource status to
     # keep it consistent with the sorted result from iptables-save.
     def should=(values)
       @should = super(values).sort_by { |sym| sym.to_s }
@@ -1139,7 +1182,10 @@ Puppet::Type.newtype(:firewall) do
   newproperty(:ctexpire, required_features: :conntrack) do
     desc <<-PUPPETCODE
       Matches a packet based on lifetime remaining in seconds or range of values
-      using the conntrack module.
+      using the conntrack module. For example:
+
+          ctexpire => '100:150'
+
     PUPPETCODE
     newvalue(%r{^\d+$|^\d+\:\d+$})
   end
