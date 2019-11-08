@@ -923,9 +923,11 @@ Puppet::Type.newtype(:firewall) do
       * NEW
       * RELATED
       * UNTRACKED
+      * SNAT
+      * DNAT
     PUPPETCODE
 
-    newvalues(:INVALID, :ESTABLISHED, :NEW, :RELATED, :UNTRACKED)
+    newvalues(:INVALID, :ESTABLISHED, :NEW, :RELATED, :UNTRACKED, :SNAT, :DNAT)
 
     # States should always be sorted. This normalizes the resource states to
     # keep it consistent with the sorted result from iptables-save.
