@@ -978,7 +978,11 @@ Puppet::Type.newtype(:firewall) do
 
       begin
         @resource.host_to_mask(value, protocol)
-        value.chomp("/32")
+        if protocol == :IPv4
+          value.chomp("/32")
+        elsif protocol == :IPv6
+          value.chomp("/128")
+        end
       rescue StandardError => e
         raise("host_to_ip failed for #{value}, exception #{e}")
       end
@@ -1010,7 +1014,11 @@ Puppet::Type.newtype(:firewall) do
 
       begin
         @resource.host_to_mask(value, protocol)
-        value.chomp("/32")
+        if protocol == :IPv4
+          value.chomp("/32")
+        elsif protocol == :IPv6
+          value.chomp("/128")
+        end
       rescue StandardError => e
         raise("host_to_ip failed for #{value}, exception #{e}")
       end
@@ -1042,7 +1050,11 @@ Puppet::Type.newtype(:firewall) do
 
       begin
         @resource.host_to_mask(value, protocol)
-        value.chomp("/32")
+        if protocol == :IPv4
+          value.chomp("/32")
+        elsif protocol == :IPv6
+          value.chomp("/128")
+        end
       rescue StandardError => e
         raise("host_to_ip failed for #{value}, exception #{e}")
       end
@@ -1074,7 +1086,11 @@ Puppet::Type.newtype(:firewall) do
 
       begin
         @resource.host_to_mask(value, protocol)
-        value.chomp("/32")
+        if protocol == :IPv4
+          value.chomp("/32")
+        elsif protocol == :IPv6
+          value.chomp("/128")
+        end
       rescue StandardError => e
         raise("host_to_ip failed for #{value}, exception #{e}")
       end
