@@ -436,6 +436,84 @@ describe firewall do # rubocop:disable RSpec/MultipleDescribes
     end
   end
 
+  describe ':ctproto' do
+    it 'accepts numeric values' do
+      resource[:ctproto] = 6
+      expect(resource[:ctproto]).to eql 6
+    end
+  end
+
+  [:ctorigsrc, :ctorigdst, :ctreplsrc, :ctrepldst].each do |addr|
+    describe addr do
+      it "should accept a #{addr} as a string without /32" do
+        resource[addr] = '127.0.0.1'
+        expect(resource[addr]).to eql '127.0.0.1'
+      end
+      it "should accept a #{addr} as a string with /32" do
+        resource[addr] = '127.0.0.1/32'
+        expect(resource[addr]).to eql '127.0.0.1'
+      end
+      it "should accept a #{addr} as a string with cidr" do
+        resource[addr] = '10.0.0.0/8'
+        expect(resource[addr]).to eql '10.0.0.0/8'
+      end
+      it "should accept a #{addr} as a string with ipv6 cidr" do
+        resource[addr] = '2001:DB8::/64'
+        expect(resource[addr]).to eql '2001:DB8::/64'
+      end
+      it "should accept a negated #{addr} as a string" do
+        resource[addr] = '! 127.0.0.1'
+        expect(resource[addr]).to eql '! 127.0.0.1'
+      end
+      it "should accept a negated #{addr} as a string with cidr" do
+        resource[addr] = '! 10.0.0.0/8'
+        expect(resource[addr]).to eql '! 10.0.0.0/8'
+      end
+    end
+  end
+
+  [:ctorigsrcport, :ctorigdstport, :ctreplsrcport, :ctrepldstport].each do |addr|
+    describe addr do
+      it "should accept #{addr} as numeric value" do
+        resource[addr] = 80
+        expect(resource[addr]).to eql 80
+      end
+      it "should accept #{addr} as range value" do
+        resource[addr] = '80:81'
+        expect(resource[addr]).to eql '80:81'
+      end
+    end
+  end
+
+  describe ':ctstatus' do
+    it 'accepts value as a string - EXPECTED' do
+      resource[:ctstatus] = :EXPECTED
+      expect(resource[:ctstatus]).to eql [:EXPECTED]
+    end
+
+    it 'accepts value as an array - EXPECTED, SEEN_REPLY' do
+      resource[:ctstatus] = [:EXPECTED, :SEEN_REPLY]
+      expect(resource[:ctstatus]).to eql [:EXPECTED, :SEEN_REPLY]
+    end
+
+    it 'sorts values alphabetically - SEEN_REPLY, EXPECTED' do
+      resource[:ctstatus] = [:SEEN_REPLY, :EXPECTED]
+      expect(resource[:ctstatus]).to eql [:EXPECTED, :SEEN_REPLY]
+    end
+  end
+
+  describe ':ctexpire' do
+    it 'accepts numeric values' do
+      resource[:ctexpire] = 100
+      expect(resource[:ctexpire]).to eql 100
+    end
+
+    it 'accepts numeric range values' do
+      resource[:ctexpire] = '100:120'
+      expect(resource[:ctexpire]).to eql '100:120'
+    end
+  end
+
   describe ':ctdir' do
     it 'accepts value as a string - REPLY' do
       resource[:ctdir] = :REPLY
