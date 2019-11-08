@@ -950,7 +950,7 @@ Puppet::Type.newtype(:firewall) do
       The specific layer-4 protocol number to match for this rule using the 
       conntrack module.
     PUPPETCODE
-    newvalue(%r{^\d+$})
+    newvalue(%r{^!?\s?\d+$})
   end
 
   newproperty(:ctorigsrc, required_features: :conntrack) do
@@ -1113,7 +1113,7 @@ Puppet::Type.newtype(:firewall) do
           ctorigsrcport => '! 80'
 
     PUPPETCODE
-    newvalue(%r{^\d+$|^\d+\:\d+$})
+    newvalue(%r{^!?\s?\d+$|^!?\s?\d+\:\d+$})
   end
 
   newproperty(:ctorigdstport, required_features: :conntrack) do
@@ -1132,7 +1132,7 @@ Puppet::Type.newtype(:firewall) do
           ctorigdstport => '! 80'
 
     PUPPETCODE
-    newvalue(%r{^\d+$|^\d+\:\d+$})
+    newvalue(%r{^!?\s?\d+$|^!?\s?\d+\:\d+$})
   end
 
   newproperty(:ctreplsrcport, required_features: :conntrack) do
@@ -1151,7 +1151,7 @@ Puppet::Type.newtype(:firewall) do
           ctreplsrcport => '! 80'
 
     PUPPETCODE
-    newvalue(%r{^\d+$|^\d+\:\d+$})
+    newvalue(%r{^!?\s?\d+$|^!?\s?\d+\:\d+$})
   end
 
   newproperty(:ctrepldstport, required_features: :conntrack) do
@@ -1170,7 +1170,7 @@ Puppet::Type.newtype(:firewall) do
           ctrepldstport => '! 80'
 
     PUPPETCODE
-    newvalue(%r{^\d+$|^\d+\:\d+$})
+    newvalue(%r{^!?\s?\d+$|^!?\s?\d+\:\d+$})
   end
 
   newproperty(:ctstatus, array_matching: :all, required_features: :conntrack) do
@@ -1209,7 +1209,7 @@ Puppet::Type.newtype(:firewall) do
           ctexpire => '100:150'
 
     PUPPETCODE
-    newvalue(%r{^\d+$|^\d+\:\d+$})
+    newvalue(%r{^!?\s?\d+$|^!?\s?\d+\:\d+$})
   end
 
   newproperty(:ctdir, required_features: :conntrack) do
